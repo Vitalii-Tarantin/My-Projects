@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map</title>
+</head>
+<body>
+    <select name="country" id="countrySelect">Country</select>
+    <select name="city" id="citySelect">City</select>
+    <script>
+        let newOption = function (someValue) {
+            let optn = document.createElement("option");
+            optn.setAttribute("value", someValue);
+            optn.append(someValue);
+            return optn;
+        }
+        fetch("https://raw.githubusercontent.com/russ666/all-countries-and-cities-json/master/countries.json")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                for (let country in data) countrySelect.append(newOption(country));
+
+                countrySelect.onchange = () => {
+                    citySelect.innerHTML = "";
+                    for (let city of data[countrySelect.value]) citySelect.append(newOption(city));
+                };
+                countrySelect.onchange();
+            });
+            console.log(1);
+    </script>
+    
+</body>
+</html>
